@@ -5,19 +5,19 @@ import os
 
 app = Flask(__name__)
 
-# Caminho interno do CSV
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH = "/home/data/br_datahackers_state_data_microdados.csv"
+if 'WEBSITE_HOSTNAME' in os.environ:
+    CSV_PATH = "/home/site/wwwroot/br_datahackers_state_data_microdados.csv"
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    CSV_PATH = os.path.join(BASE_DIR, "data", "br_datahackers_state_data_microdados.csv")
 
 def detect_encoding(path, nbytes=10000):
-    """Detecta a codificação do CSV."""
     with open(path, "rb") as f:
         raw = f.read(nbytes)
     result = chardet.detect(raw)
     return result.get("encoding", "utf-8")
 
 def load_csv(path):
-    """Carrega CSV com detecção automática de encoding e separador."""
     encoding = detect_encoding(path)
 
     sample = open(path, encoding=encoding).read(2000)
@@ -36,7 +36,6 @@ def index():
         )
     except Exception as e:
         return f"Erro ao carregar CSV: {e}", 500
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host="0.0.0.0")
