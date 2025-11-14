@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/ee2a938f-cebe-46e1-b8c2-edce50d72361/resourceGroups/rg-gs-giovana-cs/providers/Microsoft.Web/sites/webapp-gs-giovana-cs",
+    "appService.deploySubpath": "codigos"
+}
